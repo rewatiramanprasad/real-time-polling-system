@@ -9,11 +9,13 @@ export const SocketProvider = ({ children }) => {
   const [socket, setSocket] = useState(null);
 
   useEffect(() => {
-    const newSocket = io('https://real-time-polling-system.vercel.app',{
+    const newSocket = io('https://real-time-polling-system.vercel.app/',{
       transports: ['websocket', 'polling'],
-      withCredentials: true // Ensure this is set for CORS handling
+      withCredentials: true
     }); //https://real-time-polling-system.vercel.app/
     setSocket(newSocket);
+
+    
 
     return () => newSocket.close();
   }, []);

@@ -6,16 +6,22 @@ const { Server } = require("socket.io");
 const cors = require("cors");
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: ['http://localhost:3000', 'https://real-time-polling-system-hjk8.vercel.app'], // Update this with your Vercel app URL
+  methods: ['GET', 'POST'],
+  allowedHeaders: ['Content-Type'],
+  credentials: true,
+}));
+
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: '*', // Update this with your Vercel app URL
+    origin: ['http://localhost:3000', 'https://real-time-polling-system-hjk8.vercel.app'], // Update this with your Vercel app URL
     methods: ['GET', 'POST'],
-    allowedHeaders: ['my-custom-header'],
+    allowedHeaders: ['Content-Type'],
     credentials: true,
     transports: ['websocket', 'polling'],
-  }
+  },
 });
 
 // Generate random hexadecimal color code
