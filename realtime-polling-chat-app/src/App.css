@@ -1,0 +1,91 @@
+input{
+  margin: 10px;
+  padding: 5px;
+
+}
+.submitbutton{
+  background-color: orangered;
+}
+.pollVoting{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.options{
+  padding-left: 40px;
+    margin: 5px;
+    padding-right: 40px;
+    border-radius: 10px;
+}
+label{
+  font-weight:bolder ;
+}
+.chatOutline{
+
+margin-top:"20px";
+border: 1px solid #ccc;
+border-radius: "5px";
+background-color:"whiteSmoke";
+
+ min-width: 600px;
+
+}
+.chatArea{
+min-height:60dvh;
+display: flex;
+flex-direction: column;
+justify-content: center;
+overflow-y:scroll;
+height: 437px;
+
+
+}
+.action{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.action input{
+  padding-left: 60px;
+  padding-right: 60px;
+  border-radius: 10px;
+
+}
+.action button{
+  padding: 7px;
+  border-radius: 10px;
+  background-color: orangered;
+  color: white;
+
+}
+
+.navbar {
+  background-color: #333;
+  color: #fff;
+  padding: 10px;
+}
+
+.navbar-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.navbar-button {
+  background-color: transparent;
+  border: none;
+  color: #fff;
+  padding: 10px 15px;
+  cursor: pointer;
+  font-size: 16px;
+  text-transform: uppercase;
+}
+
+.navbar-button:hover {
+  background-color: #555;
+}
+
+
