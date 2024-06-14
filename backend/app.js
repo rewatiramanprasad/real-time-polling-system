@@ -6,17 +6,11 @@ const { Server } = require("socket.io");
 const cors = require("cors");
 
 const app = express();
-app.use(cors({
-  origin: 'https://real-time-polling-system-hjk8.vercel.app', // Update this with your Vercel app URL
-  methods: ['GET', 'POST'],
-  allowedHeaders: ['my-custom-header'],
-  credentials: true
-
-}));
+app.use(cors());
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: 'https://real-time-polling-system-hjk8.vercel.app', // Update this with your Vercel app URL
+    origin: '*', // Update this with your Vercel app URL
     methods: ['GET', 'POST'],
     allowedHeaders: ['my-custom-header'],
     credentials: true,
