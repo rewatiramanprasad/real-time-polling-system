@@ -15,6 +15,7 @@ const Chat = ({ chatmessage, setChatMessages, socketid }) => {
     temp.message = message;
     temp.isUser = socketid;
     socket.emit("chatMessage", temp);
+    setMessage("");
   };
 
   return (
@@ -32,13 +33,14 @@ const Chat = ({ chatmessage, setChatMessages, socketid }) => {
               }}
             >
               {item.message}
-              <div ref={ref}></div>
+              <span ref={ref}></span>
             </p>
           ))}
       </div>
       <div className="action">
         <input
           placeholder="Message ..."
+          value={message}
           onChange={(e) => {
             setMessage(e.target.value);
           }}

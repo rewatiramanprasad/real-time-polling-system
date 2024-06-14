@@ -30,6 +30,7 @@ const Polling = ({ polls, socketid }) => {
             <label>{polls.question}</label>
             {polls.options.map((item, index) => (
               <button
+              key={index}
                 className="options"
                 style={{ backgroundColor: `${item.color}` }}
                 onClick={() => {
