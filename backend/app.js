@@ -10,7 +10,7 @@ app.use(cors());
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "https://real-time-polling-system-hjk8.vercel.app",
+    origin: "*",
     methods: ["GET", "POST"],
   },
 });
