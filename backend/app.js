@@ -11,6 +11,7 @@ app.use(cors({
   methods: ['GET', 'POST'],
   allowedHeaders: ['my-custom-header'],
   credentials: true
+
 }));
 const server = http.createServer(app);
 const io = new Server(server, {
@@ -18,7 +19,8 @@ const io = new Server(server, {
     origin: 'https://real-time-polling-system-hjk8.vercel.app', // Update this with your Vercel app URL
     methods: ['GET', 'POST'],
     allowedHeaders: ['my-custom-header'],
-    credentials: true
+    credentials: true,
+    transports: ['websocket', 'polling'],
   }
 });
 
