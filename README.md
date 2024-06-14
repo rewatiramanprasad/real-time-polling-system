@@ -1,6 +1,3 @@
-
-
-
 # real-time-polling-system
 
 Welcome to My real-time-polling-system! This is a simple React application that demonstrates the basic polling system and chat features using socket.io of a React app.
