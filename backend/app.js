@@ -15,50 +15,49 @@ const io = new Server(server, {
   },
 });
 
-
+// Generate random hexadecimal color code
 const generateRandomColor = () => {
-    // Generate random hexadecimal color code
-    const color = '#' + Math.floor(Math.random()*16777215).toString(16);
-    return color;
-  };
+  const color = "#" + Math.floor(Math.random() * 16777215).toString(16);
+  return color;
+};
 
 //generate universal Unique identifier id
-  function generateUUID() {
-    // Generates a random UUID
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-      var r = Math.random() * 16 | 0,
-          v = c == 'x' ? r : (r & 0x3 | 0x8);
-      return v.toString(16);
-    });
-  }
+function generateUUID() {
+  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
+    var r = (Math.random() * 16) | 0,
+      v = c == "x" ? r : (r & 0x3) | 0x8;
+    return v.toString(16);
+  });
+}
+
 // Data structures to store poll options and chat messages
 let pollOptions = {
   id: "",
   question: "which one is best programmmng language? ",
   options: [
-    { option: "Python", votes: 0,color:generateRandomColor() },
-    { option: "Javascript", votes: 0,color:generateRandomColor() },
-    { option: "Node.js", votes: 0,color:generateRandomColor() },
-    { option: "C++", votes: 0,color:generateRandomColor() },
+    { option: "Python", votes: 0, color: generateRandomColor() },
+    { option: "Javascript", votes: 0, color: generateRandomColor() },
+    { option: "Node.js", votes: 0, color: generateRandomColor() },
+    { option: "C++", votes: 0, color: generateRandomColor() },
   ],
 };
+
 let chatMessages = [];
 
-let signup=[];
+let signup = [];
 
 // WebSocket connection handler
 io.on("connection", (socket) => {
   console.log(`New client connected ${socket.id}`);
 
   // Send initial data to the client
-  socket.emit('initialData', { pollOptions, chatMessages });
+  socket.emit("initialData", { pollOptions, chatMessages });
 
   // Handle voting
   socket.on("vote", (optionIndex) => {
     console.log(optionIndex);
     if (pollOptions.options[optionIndex]) {
       pollOptions.options[optionIndex].votes++;
-      console.log(pollOptions);
       io.emit("updatePoll", pollOptions);
     }
   });
@@ -72,50 +71,48 @@ io.on("connection", (socket) => {
     pollOptions.options[1].option = data.option2;
     pollOptions.options[2].option = data.option3;
     pollOptions.options[3].option = data.option4;
-    pollOptions.options[0].votes=0
-    pollOptions.options[1].votes=0
-    pollOptions.options[2].votes=0
-    pollOptions.options[3].votes=0
-    console.log(pollOptions);
+    pollOptions.options[0].votes = 0;
+    pollOptions.options[1].votes = 0;
+    pollOptions.options[2].votes = 0;
+    pollOptions.options[3].votes = 0;
     io.emit("Polling", pollOptions);
   });
 
   // Handle new chat message
   socket.on("chatMessage", (message) => {
-    
     chatMessages.push(message);
-    console.log(chatMessages)
     io.emit("newChatMessage", message);
   });
 
   //handle signup the user
-  socket.on("signup",(userData)=>{
-    userData.uuid=generateUUID()
-  console.log(userData);
-  signup.push(userData);
-  
+  socket.on("signup", (userData) => {
+    userData.uuid = generateUUID();
+    signup.push(userData);
   });
 
   //handle login the user
-  socket.on("login",(userData)=>{
-  if(userData){
-    console.log(userData)
-    console.log(signup)
-    const data=signup.find((user)=>user.email===userData.email && user.password===userData.password)
-    if(data){
-      console.log("login ")
-      io.to(userData.id).emit("getLoginResponse",{success:true,message:"login successful",data:[data]})
-      
+  socket.on("login", (userData) => {
+    if (userData) {
+      const data = signup.find(
+        (user) =>
+          user.email === userData.email && user.password === userData.password
+      );
+      if (data) {
+        io.to(userData.id).emit("getLoginResponse", {
+          success: true,
+          message: "login successful",
+          data: [data],
+        });
+      } else {
+        io.to(userData.id).emit("getLoginResponse", {
+          success: false,
+          message: "wrong combination of username and password",
+          data: [],
+        });
+      }
     }
-    else{
-      console.log("login error ")
-      io.to(userData.id).emit("getLoginResponse",{success:false,message:"wrong combination of username and password",data:[]})
-    }
-  }
-  // signup.push(userData);
-  
+    // signup.push(userData);
   });
-
 
   // Disconnect event
   socket.on("disconnect", () => {

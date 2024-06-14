@@ -1,16 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { useSocket } from './socket';
+import { useSocket } from "./socket";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "./firebase";
 import Chat from "./Chat";
 import Polling from "./Polling";
 import Navbar from "./nav";
-
-
 import { useNavigate } from "react-router-dom";
-// import socket from "./socket";
-
-
 
 function Home() {
   const socket = useSocket();
@@ -21,38 +16,34 @@ function Home() {
   const [chatmessage, setChatMessages] = useState([]);
   const [clicked, setClicked] = useState(1);
   const navigate = useNavigate();
-  
+
   const handlePoll = () => {
     setComponent("poll");
     setClicked(1);
   };
+
   const handleChat = () => {
     setComponent("chat");
     setClicked(2);
   };
-  
-  
+
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        console.log(user, "user");
         SetUser(user);
-        // ...
       } else {
         navigate("/login");
       }
     });
     if (!socket) return;
-    
+
     socket.connect();
-    console.log(socket)
     socket.on("connect", () => {
       setSocketId(socket.id);
-      console.log(socket.id);
     });
+
     socket.on("initialData", ({ pollOptions, chatMessages }) => {
       setPolls(pollOptions);
-      console.log("initial", pollOptions);
       setChatMessages(chatMessages);
     });
     socket.on("Polling", (data) => {
@@ -64,25 +55,24 @@ function Home() {
       setPolls(updatedPollOptions);
     });
     socket.on("newChatMessage", (message) => {
-      console.log(chatmessage);
+      
       setChatMessages([...chatmessage, message]);
-      console.log(chatmessage);
+      
     });
-    console.log("chat call me");
+    
     return () => {
-      socket.off('connect');
-      socket.off('initialData')
-      socket.off('updatePoll')
-      socket.off('newChatMessage')
+      socket.off("connect");
+      socket.off("initialData");
+      socket.off("updatePoll");
+      socket.off("newChatMessage");
     };
-  }, [chatmessage,socket]);
+  }, [chatmessage, socket]);
 
   const handleLogout = () => {
     signOut(auth);
     navigate("/login");
   };
 
-  // 
   return (
     <>
       <Navbar onLogout={handleLogout} />

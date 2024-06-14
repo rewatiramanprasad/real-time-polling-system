@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useSocket } from './socket';
+import { useSocket } from "./socket";
 import "./App.css";
 const Polling = ({ polls, socketid }) => {
   const socket = useSocket();
@@ -9,9 +9,6 @@ const Polling = ({ polls, socketid }) => {
   const [option3, setOption3] = useState("");
   const [option4, setOption4] = useState("");
 
-  console.log(polls);
-
-  //   console.log(value)
   const handleSubmit = () => {
     let temp = {};
     temp.id = socketid;
@@ -45,44 +42,44 @@ const Polling = ({ polls, socketid }) => {
           </div>
         )}
       </div>
-      <div style={styles.mostOuter} >
-      {polls && (
-        <div style={styles.outer}>
-          <input
-            onChange={(e) => {
-              setQuestion(e.target.value);
-            }}
-            placeholder="please enter your question"
-          />
-          <input
-            placeholder="Option1"
-            onChange={(e) => {
-              setOption1(e.target.value);
-            }}
-          />
-          <input
-            placeholder="Option2"
-            onChange={(e) => {
-              setOption2(e.target.value);
-            }}
-          />
-          <input
-            placeholder="Option3"
-            onChange={(e) => {
-              setOption3(e.target.value);
-            }}
-          />
-          <input
-            placeholder="Option4"
-            onChange={(e) => {
-              setOption4(e.target.value);
-            }}
-          />
-          <button className="submitbutton" onClick={handleSubmit}>
-            Generate
-          </button>
-        </div>
-      )}
+      <div style={styles.mostOuter}>
+        {polls && (
+          <div style={styles.outer}>
+            <input
+              onChange={(e) => {
+                setQuestion(e.target.value);
+              }}
+              placeholder="please enter your question"
+            />
+            <input
+              placeholder="Option1"
+              onChange={(e) => {
+                setOption1(e.target.value);
+              }}
+            />
+            <input
+              placeholder="Option2"
+              onChange={(e) => {
+                setOption2(e.target.value);
+              }}
+            />
+            <input
+              placeholder="Option3"
+              onChange={(e) => {
+                setOption3(e.target.value);
+              }}
+            />
+            <input
+              placeholder="Option4"
+              onChange={(e) => {
+                setOption4(e.target.value);
+              }}
+            />
+            <button className="submitbutton" onClick={handleSubmit}>
+              Generate
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
@@ -95,13 +92,12 @@ const styles = {
     backgroundColor: "whiteSmoke",
   },
   mostOuter: {
-    // marginTop: "20px",
     display: "flex",
     border: "1px solid #ccc",
     borderRadius: "5px",
     backgroundColor: "whiteSmoke",
     flexDirection: "column",
-    width:"450px",
+    width: "450px",
   },
   most: {
     marginTop: "20px",
