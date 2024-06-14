@@ -11,7 +11,7 @@ export const SocketProvider = ({ children }) => {
   useEffect(() => {
     const newSocket = io('http://localhost:3001');
     setSocket(newSocket);
-
+    
     return () => newSocket.close();
   }, []);
 

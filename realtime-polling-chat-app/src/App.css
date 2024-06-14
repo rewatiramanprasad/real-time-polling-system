@@ -89,3 +89,25 @@ height: 437px;
 }
 
 
+.container {
+  display: flex;
+  height: 60vh;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  margin-top: 40px;           
+}
+
+.box {
+  width: 571px;
+  height: 362px;
+  background-color: whitesmoke;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  flex-direction: column;  
+}
+
+

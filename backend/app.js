@@ -122,7 +122,7 @@ io.on("connection", (socket) => {
 
 // Express routes
 app.get("/", (req, res) => {
-  res.send("hello world");
+  res.status(200).send("hello world").end();
 });
 
 // Start the server

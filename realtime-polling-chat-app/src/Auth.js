@@ -7,6 +7,7 @@ import { auth } from "./firebase";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import './App.css';
 // State for signup form fields
 const SignupForm = ({ setShowLogin }) => {
   const [signupFormData, setSignupFormData] = useState({
@@ -48,7 +49,8 @@ const SignupForm = ({ setShowLogin }) => {
   };
 
   return (
-    <form onSubmit={handleSignupSubmit}>
+    <div className="container">
+      <form className="box" onSubmit={handleSignupSubmit}>
       <h2>Sign Up</h2>
       <ToastContainer />
       <div>
@@ -73,6 +75,7 @@ const SignupForm = ({ setShowLogin }) => {
       </div>
       <button type="submit">Sign Up</button>
     </form>
+    </div>
   );
 };
 
@@ -119,7 +122,8 @@ const LoginForm = () => {
   };
 
   return (
-    <form onSubmit={handleLoginSubmit}>
+    <div className='container'>
+      <form  className="box"onSubmit={handleLoginSubmit}>
       <h2>Login</h2>
       <ToastContainer />
       <div>
@@ -144,6 +148,7 @@ const LoginForm = () => {
       </div>
       <button type="submit">Login</button>
     </form>
+    </div>
   );
 };
 
@@ -152,7 +157,7 @@ const Auth = () => {
   const [showLogin, setShowLogin] = useState(false);
 
   return (
-    <div>
+    <div className="container screen">
       {showLogin ? <LoginForm /> : <SignupForm setShowLogin={setShowLogin} />}
       <p>
         {showLogin ? "Don't have an account? " : "Already have an account? "}
