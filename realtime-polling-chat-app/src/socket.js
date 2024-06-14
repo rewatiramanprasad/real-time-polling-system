@@ -10,8 +10,8 @@ export const SocketProvider = ({ children }) => {
 
   useEffect(() => {
     const newSocket = io('https://real-time-polling-system.vercel.app/',{
-      transports: ['websocket', 'polling'],
-      withCredentials: true
+      // transports: ['websocket', 'polling'],
+      // withCredentials: true
     }); //https://real-time-polling-system.vercel.app/
     setSocket(newSocket);
 

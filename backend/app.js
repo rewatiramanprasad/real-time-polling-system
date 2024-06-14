@@ -56,14 +56,14 @@ let chatMessages = [];
 let signup = [];
 
 // WebSocket connection handler
-io.on("connection", (socket) => {
+io.on("connection", async(socket) => {
   console.log(`New client connected ${socket.id}`);
 
   // Send initial data to the client
   socket.emit("initialData", { pollOptions, chatMessages });
 
   // Handle voting
-  socket.on("vote", (optionIndex) => {
+  await socket.on("vote", (optionIndex) => {
     console.log(optionIndex);
     if (pollOptions.options[optionIndex]) {
       pollOptions.options[optionIndex].votes++;
@@ -72,7 +72,7 @@ io.on("connection", (socket) => {
   });
 
   //generate the new poll
-  socket.on("GeneratedPoll", (data) => {
+ await socket.on("GeneratedPoll", (data) => {
     console.log(data);
     pollOptions.id = data.id;
     pollOptions.question = data.question;
@@ -84,44 +84,46 @@ io.on("connection", (socket) => {
     pollOptions.options[1].votes = 0;
     pollOptions.options[2].votes = 0;
     pollOptions.options[3].votes = 0;
+    console.log(pollOptions)
     io.emit("Polling", pollOptions);
   });
 
   // Handle new chat message
-  socket.on("chatMessage", (message) => {
+ await socket.on("chatMessage", (message) => {
+  console.log(message)
     chatMessages.push(message);
     io.emit("newChatMessage", message);
   });
 
   //handle signup the user
-  socket.on("signup", (userData) => {
-    userData.uuid = generateUUID();
-    signup.push(userData);
-  });
+  // socket.on("signup", (userData) => {
+  //   userData.uuid = generateUUID();
+  //   signup.push(userData);
+  // });
 
   //handle login the user
-  socket.on("login", (userData) => {
-    if (userData) {
-      const data = signup.find(
-        (user) =>
-          user.email === userData.email && user.password === userData.password
-      );
-      if (data) {
-        io.to(userData.id).emit("getLoginResponse", {
-          success: true,
-          message: "login successful",
-          data: [data],
-        });
-      } else {
-        io.to(userData.id).emit("getLoginResponse", {
-          success: false,
-          message: "wrong combination of username and password",
-          data: [],
-        });
-      }
-    }
+  // socket.on("login", (userData) => {
+  //   if (userData) {
+  //     const data = signup.find(
+  //       (user) =>
+  //         user.email === userData.email && user.password === userData.password
+  //     );
+  //     if (data) {
+  //       io.to(userData.id).emit("getLoginResponse", {
+  //         success: true,
+  //         message: "login successful",
+  //         data: [data],
+  //       });
+  //     } else {
+  //       io.to(userData.id).emit("getLoginResponse", {
+  //         success: false,
+  //         message: "wrong combination of username and password",
+  //         data: [],
+  //       });
+  //     }
+  //   }
     // signup.push(userData);
-  });
+  // });
 
   // Disconnect event
   socket.on("disconnect", () => {
